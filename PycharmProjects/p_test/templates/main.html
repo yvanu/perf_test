@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZStack云主机性能测试</title>
+    <script src={{ url_for('static',filename='js/jquery-3.1.1.min.js') }}></script>
+    <script src={{ url_for('static',filename='js/bootstrap.min.js') }}></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='js/bootstrap.min.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="form-group" style="width: 300px">
+        <label>IP-1</label>
+        <input class="form-control" name="IP-1" placeholder="">
+    </div>
+    <div class="form-group" style="width: 300px">
+        <label>IP-2</label>
+        <input class="form-control" name="IP-2" placeholder="">
+    </div>
+    <div class="form-group" style="width: 300px">
+    <label>清选择测试盘:</label>
+    <select class="form-control" id="sel">
+        <option value="/dev/sda">dev/sda</option>
+        <option value="/dev/vda">dev/vda</option>
+    </select>
+    </div>
+   <p><b>请选择测试项:</b></p>
+    <a href="{{ url_for('wait') }}">
+        <button class="btn btn-lg btn-primary btn-block " id="start_net" style="width: 200px">网络带宽测试</button>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block " id="start_r4k" style="width: 200px">read-4k</button>
+        <button class="btn btn-lg btn-primary btn-block " id="start_w4k" style="width: 200px">write-4k</button>
+        <button class="btn btn-lg btn-primary btn-block " id="start_rw4k" style="width: 200px">readwrite-4k</button>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block " id="start_r64k" style="width: 200px">read-64k</button>
+        <button class="btn btn-lg btn-primary btn-block " id="start_w64k" style="width: 200px">write-64k</button>
+        <button class="btn btn-lg btn-primary btn-block " id="start_rw64k" style="width: 200px">readwrite-64k</button>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block " id="start_r1m" style="width: 200px">read-1m</button>
+        <button class="btn btn-lg btn-primary btn-block " id="start_w1m" style="width: 200px">write-1m</button>
+        <button class="btn btn-lg btn-primary btn-block " id="start_rw1m" style="width: 200px">readwrite-1m</button>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block " id="all" style="width: 200px">测试所有项并生成文档</button>
+    </a>
+
+    <div style="height: 10px"></div>
+
+    <script>
+
+        $("button").each(
+            function(){
+            $(this).click(
+            function(){
+                var idd = $(this).attr("id");
+                var disk = $("#sel").val();
+                var ip_1 = $("input[name=IP-1]").val();
+                var ip_2 = $("input[name=IP-2]").val();
+                $.ajax({
+                    'type':'post',
+                    'url': '/start/',
+                    'data': {
+                        idd,
+                        ip_1,
+                        ip_2,
+                        disk,
+                    },
+                    'success': function (data) {
+
+                    },
+                    'fail': function (error) {
+
+                    }
+                });
+
+
+
+            }
+            );
+            }
+            );
+    </script>
+
+
+</div>
+</body>
+</html>

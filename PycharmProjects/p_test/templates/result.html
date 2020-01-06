@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZStack云主机性能测试</title>
+    <script src={{ url_for('static',filename='js/jquery-3.1.1.min.js') }}></script>
+    <script src={{ url_for('static',filename='js/restart.js') }}></script>
+</head>
+<body>
+<input type="hidden" name="ip" value="{{ ip }}"/>
+{% if state=='no_ready' %}
+    <script src={{ url_for('static',filename='js/refresh.js') }}></script>
+{% endif %}
+    <h1>正在测试，请等待</h1>
+    {% for a in result %}
+        <div>{{ a }}</div>
+    {% endfor %}
+{% if state=='ready' %}
+    <a href="{{ url_for('first') }}"><button id="restart" >返回页面重新选择</button></a>
+    {% if select_test == 'all' %}
+        <button id="create" >生成最后结果</button>
+        {% endif %}
+{% endif %}
+</body>
+</html>
