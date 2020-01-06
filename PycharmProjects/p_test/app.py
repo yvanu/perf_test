@@ -18,6 +18,7 @@ select_test = None
 
 
 @app.route('/')
+@app.route('/main/')
 def first():
     return render_template('main.html')
 
@@ -313,6 +314,13 @@ def restart():
     state = 'no_ready'
     file = None
     date = None
+    return jsonify({'code': 200, 'message': '234'})
+
+@app.route('/clear/')
+def clear():
+    global result_list, state, file, file1, result_num_list, ip
+    cmd = "rm -rf ./logs/* && rm -rf /var/www/html/results/*"
+    os.popen(cmd)
     return jsonify({'code': 200, 'message': '234'})
 
 
